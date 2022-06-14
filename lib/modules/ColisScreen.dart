@@ -1,7 +1,24 @@
 import 'package:e_build/models/Colis_Model.dart';
+import 'package:e_build/modules/InColisScreen.dart';
 import 'package:flutter/material.dart';
+import 'dart:math' as math;
 
-class ColisScreen extends StatelessWidget {
+class ColisScreen extends StatefulWidget {
+  final String date;
+  final int nbrColis;
+  final double prixTotal;
+
+  ColisScreen({
+    required this.date,
+    required this.nbrColis,
+    required this.prixTotal,
+  });
+
+  @override
+  _ColisScreenState createState() => _ColisScreenState(prixTotal);
+}
+
+class _ColisScreenState extends State<ColisScreen> {
   TextStyle WhiteStyle = TextStyle(
     color: Colors.white,
   );
@@ -21,7 +38,7 @@ class ColisScreen extends StatelessWidget {
       name: 'asma mnai',
       phone: '52093165',
       price: 51,
-      etat: 'En Cours',
+      etat: 'Retour',
     ),
     ColisModel(
       nbrColis: '4013312894',
@@ -29,7 +46,7 @@ class ColisScreen extends StatelessWidget {
       name: 'abed elabset bn amer',
       phone: '94191305',
       price: 32,
-      etat: 'En Cours',
+      etat: 'Livré',
     ),
     ColisModel(
       nbrColis: '4013240428',
@@ -37,7 +54,7 @@ class ColisScreen extends StatelessWidget {
       name: 'imen elhaj',
       phone: '99929571',
       price: 132,
-      etat: 'En Cours',
+      etat: 'A vérifier',
     ),
     ColisModel(
       nbrColis: '4013240430',
@@ -45,11 +62,27 @@ class ColisScreen extends StatelessWidget {
       name: 'fadi Wertatani',
       phone: '93007457',
       price: 85.6,
-      etat: 'En Cours',
+      etat: 'Au depot',
     ),
   ];
 
-  bool state = true; //l'état de livraison du produit (état initial: en cour)
+  int currentState = 1;
+  List<String> state = [
+    'Au depot',
+    'En cours',
+    'Livré',
+    'A vérifier',
+    'Retour',
+  ];
+
+  double count = 0;
+  Color currentColor = Colors.greenAccent;
+
+  late double prixTotal;
+
+  _ColisScreenState(double prixTotal) {
+    this.prixTotal = prixTotal;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -60,6 +93,14 @@ class ColisScreen extends StatelessWidget {
         child: SingleChildScrollView(
           child: Column(
             children: [
+              Align(
+                alignment: Alignment.topLeft,
+                child: IconButton(
+                  icon: Icon(Icons.arrow_back),
+                  onPressed: () {},
+                  color: Colors.white,
+                ),
+              ),
               Row(
                 children: [
                   Expanded(
@@ -104,9 +145,14 @@ class ColisScreen extends StatelessWidget {
                   ),
                   Container(
                     alignment: AlignmentDirectional.centerEnd,
-                    child: Icon(
-                      Icons.article_outlined,
-                      color: Colors.white,
+                    child: IconButton(
+                      onPressed: () {
+                        print('Read more');
+                      },
+                      icon: Icon(
+                        Icons.library_books_outlined,
+                        color: Colors.white,
+                      ),
                     ),
                   )
                 ],
@@ -129,7 +175,7 @@ class ColisScreen extends StatelessWidget {
                               ),
                             ),
                             Text(
-                              '61', //A changer
+                              '${colis.length.toString()}', //A changer
                               style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 30.0,
@@ -146,7 +192,7 @@ class ColisScreen extends StatelessWidget {
                               ),
                             ),
                             Text(
-                              '3895.20', //A changer
+                              '$prixTotal', //A changer
                               style: TextStyle(
                                 color: Colors.white,
                               ),
@@ -164,9 +210,14 @@ class ColisScreen extends StatelessWidget {
                   ),
                   Container(
                     alignment: AlignmentDirectional.centerEnd,
-                    child: Icon(
-                      Icons.add_circle_outline,
-                      color: Colors.white,
+                    child: IconButton(
+                      onPressed: () {
+                        print('Add a colis');
+                      },
+                      icon: Icon(
+                        Icons.add_circle_outline,
+                        color: Colors.white,
+                      ),
                     ),
                   )
                 ],
@@ -195,6 +246,17 @@ class ColisScreen extends StatelessWidget {
   Widget colisCard(ColisModel coli) => GestureDetector(
         onTap: () {
           print("Colis de: " + coli.name); //A changer
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => InColisScreen(
+                numColis: coli.nbrColis,
+                nom: coli.name,
+                phone: coli.phone,
+                prix: coli.price,
+              ),
+            ),
+          );
         },
         child: Container(
           width: double.infinity,
@@ -277,9 +339,14 @@ class ColisScreen extends StatelessWidget {
                             ),
                             Row(
                               children: [
-                                Icon(
-                                  Icons.price_change_outlined,
-                                  color: Colors.white,
+                                Transform(
+                                  //flip the icon
+                                  alignment: Alignment.center,
+                                  transform: Matrix4.rotationY(math.pi),
+                                  child: Icon(
+                                    Icons.local_offer_outlined,
+                                    color: Colors.white,
+                                  ),
                                 ),
                                 SizedBox(
                                   width: 8.0,
@@ -309,9 +376,7 @@ class ColisScreen extends StatelessWidget {
                           Container(
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(10.0),
-                              color: state
-                                  ? Colors.greenAccent
-                                  : Colors.orangeAccent,
+                              color: checkState(coli.etat, currentColor),
                             ),
                             child: Padding(
                               padding: const EdgeInsets.all(5.0),
@@ -334,4 +399,25 @@ class ColisScreen extends StatelessWidget {
           ),
         ),
       );
+
+  Color checkState(String state, Color currentColor) {
+    switch (state) {
+      case 'Au depot':
+        currentColor = Colors.white;
+        break;
+      case 'En cours':
+        currentColor = Colors.greenAccent;
+        break;
+      case 'Livré':
+        currentColor = Colors.green;
+        break;
+      case 'A vérifier':
+        currentColor = Colors.orangeAccent;
+        break;
+      case 'Retour':
+        currentColor = Colors.red;
+        break;
+    }
+    return currentColor;
+  }
 }

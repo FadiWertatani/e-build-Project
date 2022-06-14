@@ -1,7 +1,10 @@
-import 'package:e_build/TotalColis_Screen.dart';
+import 'package:e_build/layout/TotalColis_Screen.dart';
 import 'package:flutter/material.dart';
 
+import 'modules/Profile.dart';
 import 'modules/ColisScreen.dart';
+import 'modules/InColisScreen.dart';
+import 'modules/barcode.dart';
 
 void main() {
   runApp(MyApp());

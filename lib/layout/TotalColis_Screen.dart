@@ -1,9 +1,10 @@
 import 'package:e_build/modules/MenuScreen.dart';
-import 'package:e_build/modules/ProfileScreen.dart';
+import 'package:e_build/my_flutter_app_icons.dart';
 import 'package:flutter/material.dart';
 
-import 'modules/PickUpScreen.dart';
-import 'modules/RunSheetScreen.dart';
+import '../modules/Profile.dart';
+import '../modules/PickUpScreen.dart';
+import '../modules/RunSheetScreen.dart';
 
 class TotalColisScreen extends StatefulWidget {
   const TotalColisScreen({Key? key}) : super(key: key);
@@ -13,13 +14,13 @@ class TotalColisScreen extends StatefulWidget {
 }
 
 class _TotalColisScreenState extends State<TotalColisScreen> {
-  int currentIndex = 2;
+  int currentIndex = 1;
 
   List<Widget> screens = [
     MenuScreen(),
     PickUpScreen(),
     RunSheetScreen(),
-    ProfileScreen()
+    MyProfileScreen()
   ];
 
   @override
@@ -27,16 +28,25 @@ class _TotalColisScreenState extends State<TotalColisScreen> {
     return Scaffold(
       backgroundColor: Color(0xff282828),
       floatingActionButton: FloatingActionButton(
+        backgroundColor: Colors.orangeAccent,
+        foregroundColor: Colors.black,
         onPressed: () async {
           var name = await getName();
           print(name);
         },
-        child: Icon(
-          Icons.qr_code_2,
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Icon(MyFlutterApp.barcode),
+          /*Image.asset(
+            'assets/scan.png',
+          ),*/
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       bottomNavigationBar: BottomNavigationBar(
+        backgroundColor: Colors.greenAccent,
+        selectedItemColor: Colors.black,
+        elevation: 0.0,
         type: BottomNavigationBarType.fixed,
         onTap: (index) {
           setState(() {
@@ -76,6 +86,6 @@ class _TotalColisScreenState extends State<TotalColisScreen> {
   }
 
   Future<String> getName() async {
-    return 'Fadi Wertatani';
+    return 'BarCode';
   }
 }

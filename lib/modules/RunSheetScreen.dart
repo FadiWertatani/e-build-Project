@@ -1,71 +1,92 @@
 import 'package:e_build/models/RunsheetModel.dart';
+import 'package:e_build/modules/ColisScreen.dart';
 import 'package:flutter/material.dart';
+import 'package:percent_indicator/circular_percent_indicator.dart';
 
-class RunSheetScreen extends StatelessWidget {
+class RunSheetScreen extends StatefulWidget {
+  @override
+  _RunSheetScreenState createState() => _RunSheetScreenState();
+}
+
+class _RunSheetScreenState extends State<RunSheetScreen> {
   TextStyle WhiteStyle = TextStyle(
     color: Colors.white,
   );
+
+  double runSheetCompleted = 0.75;
 
   List<RunSheetModel> runSheets = [
     RunSheetModel(
       numRunSheet: '123456789',
       prixTotalRunSheet: 1643,
       dateRunSheet: '02-06-2022',
+      nbrColis: 61,
     ),
     RunSheetModel(
       numRunSheet: '123456789',
       prixTotalRunSheet: 1643,
       dateRunSheet: '02-06-2022',
+      nbrColis: 61,
     ),
     RunSheetModel(
       numRunSheet: '123456789',
       prixTotalRunSheet: 1643,
       dateRunSheet: '02-06-2022',
+      nbrColis: 60,
     ),
     RunSheetModel(
       numRunSheet: '123456789',
       prixTotalRunSheet: 1643,
       dateRunSheet: '02-06-2022',
+      nbrColis: 61,
     ),
     RunSheetModel(
       numRunSheet: '123456789',
       prixTotalRunSheet: 1643,
       dateRunSheet: '02-06-2022',
+      nbrColis: 61,
     ),
     RunSheetModel(
       numRunSheet: '123456789',
       prixTotalRunSheet: 1643,
       dateRunSheet: '02-06-2022',
+      nbrColis: 61,
     ),
     RunSheetModel(
       numRunSheet: '123456789',
       prixTotalRunSheet: 1643,
       dateRunSheet: '02-06-2022',
+      nbrColis: 61,
     ),
     RunSheetModel(
       numRunSheet: '123456789',
       prixTotalRunSheet: 1643,
       dateRunSheet: '02-06-2022',
+      nbrColis: 60,
     ),
     RunSheetModel(
       numRunSheet: '123456789',
       prixTotalRunSheet: 1643,
       dateRunSheet: '02-06-2022',
+      nbrColis: 61,
     ),
     RunSheetModel(
       numRunSheet: '123456789',
       prixTotalRunSheet: 1643,
       dateRunSheet: '02-06-2022',
+      nbrColis: 61,
     ),
     RunSheetModel(
       numRunSheet: '123456789',
       prixTotalRunSheet: 1643,
       dateRunSheet: '02-06-2022',
+      nbrColis: 61,
     ),
     RunSheetModel(
       numRunSheet: '123456789',
       prixTotalRunSheet: 1643,
       dateRunSheet: '02-06-2022',
+      nbrColis: 61,
     ),
   ];
 
@@ -76,118 +97,51 @@ class RunSheetScreen extends StatelessWidget {
       child: SingleChildScrollView(
         child: Column(
           children: [
-            GestureDetector(
-              onTap: () {
-                print("Run Sheet detected"); //A changer
-              },
-              child: Container(
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(
-                    20.0,
-                  ),
+            Container(
+              width: double.infinity,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(
+                  20.0,
                 ),
-                clipBehavior: Clip.antiAliasWithSaveLayer,
-                child: Card(
-                  child: Padding(
-                    padding: const EdgeInsets.all(10.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          children: [
-                            Expanded(
-                              child: Text(
-                                '4013072586', //A changer
-                                style: WhiteStyle,
-                              ),
-                            ),
-                            Text(
-                              '02-03-2022', //Changeable
-                              style: WhiteStyle,
-                            ),
-                          ],
-                        ),
-                        SizedBox(
-                          height: 8.0,
-                        ),
-                        Container(
-                          height: 1.0,
+              ),
+              clipBehavior: Clip.antiAliasWithSaveLayer,
+              child: Card(
+                child: Padding(
+                  padding: const EdgeInsets.all(20.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Text(
+                        'RunSheets complet :',
+                        style: TextStyle(
                           color: Colors.white,
+                          fontSize: 20.0,
                         ),
-                        SizedBox(
-                          height: 8.0,
+                      ),
+                      SizedBox(
+                        width: 20.0,
+                      ),
+                      CircularPercentIndicator(
+                        animation: true,
+                        animationDuration: 3000,
+                        radius: 50,
+                        lineWidth: 7.0,
+                        percent: runSheetCompleted,
+                        progressColor: Colors.greenAccent,
+                        backgroundColor: Color(0xFF767D80),
+                        circularStrokeCap: CircularStrokeCap.round,
+                        center: Text(
+                          (runSheetCompleted * 100).toString() + ' %',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 20.0,
+                          ),
                         ),
-                        Row(
-                          children: [
-                            Expanded(
-                              child: Column(
-                                children: [
-                                  Row(
-                                    children: [
-                                      Icon(
-                                        Icons.person_outline,
-                                        color: Colors.white,
-                                      ),
-                                      SizedBox(
-                                        width: 8.0,
-                                      ),
-                                      Text(
-                                        'amel mhamdi', //Changeable
-                                        style: WhiteStyle,
-                                      ),
-                                    ],
-                                  ),
-                                  SizedBox(
-                                    height: 8.0,
-                                  ),
-                                  Row(
-                                    children: [
-                                      Icon(
-                                        Icons.call_outlined,
-                                        color: Colors.white,
-                                      ),
-                                      SizedBox(
-                                        width: 8.0,
-                                      ),
-                                      Text(
-                                        '24115236', //Changeable
-                                        style: WhiteStyle,
-                                      ),
-                                    ],
-                                  ),
-                                  SizedBox(
-                                    height: 8.0,
-                                  ),
-                                  Row(
-                                    children: [
-                                      Icon(
-                                        Icons.price_change_outlined,
-                                        color: Colors.white,
-                                      ),
-                                      SizedBox(
-                                        width: 8.0,
-                                      ),
-                                      Text(
-                                        '29', //Changeable (price)
-                                        style: WhiteStyle,
-                                      ),
-                                      Text(
-                                        ' TND',
-                                        style: WhiteStyle,
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        )
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
-                  color: Colors.black12,
                 ),
+                color: Colors.black12,
               ),
             ),
             SizedBox(
@@ -223,6 +177,16 @@ class RunSheetScreen extends StatelessWidget {
   Widget runSheetCard(RunSheetModel runSheet) => GestureDetector(
         onTap: () {
           print("Run Sheet number : " + runSheet.numRunSheet); //A changer
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => ColisScreen(
+                date: runSheet.dateRunSheet,
+                nbrColis: runSheet.nbrColis,
+                prixTotal: runSheet.prixTotalRunSheet,
+              ),
+            ),
+          );
         },
         child: Container(
           width: double.infinity,
@@ -240,14 +204,6 @@ class RunSheetScreen extends StatelessWidget {
                   Expanded(
                     child: Row(
                       children: [
-                        Icon(
-                          Icons.qr_code_2,
-                          color: Colors.white,
-                          size: 40.0,
-                        ),
-                        SizedBox(
-                          width: 8.0,
-                        ),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -293,9 +249,13 @@ class RunSheetScreen extends StatelessWidget {
                       ],
                     ),
                   ),
-                  Text(
-                    '${runSheet.dateRunSheet}',
-                    style: WhiteStyle,
+                  Column(
+                    children: [
+                      Text(
+                        '${runSheet.dateRunSheet}',
+                        style: WhiteStyle,
+                      ),
+                    ],
                   ),
                 ],
               ),
