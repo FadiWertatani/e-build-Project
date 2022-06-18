@@ -97,7 +97,9 @@ class _ColisScreenState extends State<ColisScreen> {
                 alignment: Alignment.topLeft,
                 child: IconButton(
                   icon: Icon(Icons.arrow_back),
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
                   color: Colors.white,
                 ),
               ),

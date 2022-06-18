@@ -1,4 +1,6 @@
+import 'package:e_build/modules/BarcodeNavDrawer.dart';
 import 'package:e_build/modules/MenuScreen.dart';
+import 'package:e_build/modules/barcode.dart';
 import 'package:e_build/my_flutter_app_icons.dart';
 import 'package:flutter/material.dart';
 
@@ -30,9 +32,13 @@ class _TotalColisScreenState extends State<TotalColisScreen> {
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.orangeAccent,
         foregroundColor: Colors.black,
-        onPressed: () async {
-          var name = await getName();
-          print(name);
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => BarcodeNavDrawer(),
+            ),
+          );
         },
         child: Padding(
           padding: const EdgeInsets.all(8.0),
@@ -44,7 +50,7 @@ class _TotalColisScreenState extends State<TotalColisScreen> {
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: Colors.greenAccent,
+        backgroundColor: Color(0xff2a756e),
         selectedItemColor: Colors.black,
         elevation: 0.0,
         type: BottomNavigationBarType.fixed,
@@ -83,9 +89,5 @@ class _TotalColisScreenState extends State<TotalColisScreen> {
       ),
       body: screens[currentIndex],
     );
-  }
-
-  Future<String> getName() async {
-    return 'BarCode';
   }
 }

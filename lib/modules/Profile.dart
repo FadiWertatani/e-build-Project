@@ -19,7 +19,7 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
             Container(
               height: 175.0,
               width: double.infinity,
-              color: Colors.greenAccent,
+              color: Color(0xff2a756e),
             ),
             Positioned(
               top: 100.0,

@@ -25,9 +25,11 @@ class _InColisScreenState extends State<InColisScreen> {
     'Au depot',
     'En cours',
     'Livré',
-    'A vérifier',
-    'Retour',
+    'Anomalie',
   ];
+
+  String anomalieType = '';
+
   Color currentColor = Colors.greenAccent;
 
   late String numColis;
@@ -52,6 +54,16 @@ class _InColisScreenState extends State<InColisScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              Align(
+                alignment: Alignment.topLeft,
+                child: IconButton(
+                  icon: Icon(Icons.arrow_back),
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  color: Colors.white,
+                ),
+              ),
               Row(
                 children: [
                   Expanded(
@@ -321,10 +333,6 @@ class _InColisScreenState extends State<InColisScreen> {
     );
   }
 
-  void check(String stat) {
-    for (int i = 0; i < 5; i++) {}
-  }
-
   Widget responsiveState(double w) {
     Widget current = Column(
       children: [
@@ -426,52 +434,45 @@ class _InColisScreenState extends State<InColisScreen> {
                 ),
               ),
             ),
-          ],
-        ),
-        SizedBox(
-          height: 10.0,
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            GestureDetector(
-              onTap: () {
-                setState(() {
-                  currentState = 3;
-                  currentColor = Colors.orangeAccent;
-                });
-              },
-              child: Container(
-                decoration: BoxDecoration(
-                  border: Border.all(
-                    color: Colors.white38,
-                    width: 1,
-                  ),
-                  borderRadius: BorderRadius.circular(5.0),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                    vertical: 8.0,
-                    horizontal: 20.0,
-                  ),
-                  child: Text(
-                    'A vérifier',
-                    style: TextStyle(
-                      color: Colors.white,
-                    ),
-                  ),
-                ),
-              ),
-            ),
             SizedBox(
               width: 10.0,
               height: 10.0,
             ),
             GestureDetector(
               onTap: () {
+                showDialog(
+                  barrierColor: Colors.black.withOpacity(.5),
+                  context: context,
+                  builder: (BuildContext context) {
+                    return AlertDialog(
+                      title: Text(
+                        "Qu'est ce que cette anomalie",
+                        style: TextStyle(
+                          fontSize: 15.0,
+                        ),
+                      ),
+                      actions: [
+                        Container(
+                          child: TextFormField(
+                            decoration: InputDecoration(
+                              border: OutlineInputBorder(),
+                            ),
+                            cursorColor: Colors.black,
+                            onFieldSubmitted: (value) {
+                              setState(() {
+                                anomalieType = value;
+                              });
+                            },
+                          ),
+                          height: 30.0,
+                        ),
+                      ],
+                    );
+                  },
+                );
                 setState(() {
-                  currentState = 4;
-                  currentColor = Colors.red;
+                  currentState = 3;
+                  currentColor = Colors.redAccent;
                 });
               },
               child: Container(
@@ -488,7 +489,7 @@ class _InColisScreenState extends State<InColisScreen> {
                     horizontal: 20.0,
                   ),
                   child: Text(
-                    'Retour',
+                    'Anomalie',
                     style: TextStyle(
                       color: Colors.white,
                     ),
@@ -611,6 +612,37 @@ class _InColisScreenState extends State<InColisScreen> {
             children: [
               GestureDetector(
                 onTap: () {
+                  showDialog(
+                    barrierColor: Colors.black.withOpacity(.5),
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        title: Text(
+                          "Qu'est ce que cette anomalie",
+                          style: TextStyle(
+                            fontSize: 15.0,
+                          ),
+                        ),
+                        actions: [
+                          Container(
+                            child: TextFormField(
+                              decoration: InputDecoration(
+                                border: OutlineInputBorder(),
+                              ),
+                              cursorColor: Colors.black,
+                              onFieldSubmitted: (value) {
+                                setState(() {
+                                  anomalieType = value;
+                                });
+                                Navigator.of(context).pop();
+                              },
+                            ),
+                            height: 30.0,
+                          ),
+                        ],
+                      );
+                    },
+                  );
                   setState(() {
                     currentState = 3;
                     currentColor = Colors.orangeAccent;
@@ -630,40 +662,7 @@ class _InColisScreenState extends State<InColisScreen> {
                       horizontal: 20.0,
                     ),
                     child: Text(
-                      'A vérifier',
-                      style: TextStyle(
-                        color: Colors.white,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-              SizedBox(
-                width: 10.0,
-                height: 10.0,
-              ),
-              GestureDetector(
-                onTap: () {
-                  setState(() {
-                    currentState = 4;
-                    currentColor = Colors.red;
-                  });
-                },
-                child: Container(
-                  decoration: BoxDecoration(
-                    border: Border.all(
-                      color: Colors.white38,
-                      width: 1,
-                    ),
-                    borderRadius: BorderRadius.circular(5.0),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                      vertical: 8.0,
-                      horizontal: 20.0,
-                    ),
-                    child: Text(
-                      'Retour',
+                      'Anomalie',
                       style: TextStyle(
                         color: Colors.white,
                       ),
@@ -676,7 +675,7 @@ class _InColisScreenState extends State<InColisScreen> {
         ],
       );
       print(w);
-    } else if ((350 < w) && (w <= 550)) {
+    } else {
       current = Column(
         children: [
           Row(
@@ -783,9 +782,40 @@ class _InColisScreenState extends State<InColisScreen> {
               ),
               GestureDetector(
                 onTap: () {
+                  showDialog(
+                    barrierColor: Colors.black.withOpacity(.5),
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        title: Text(
+                          "Qu'est ce que cette anomalie",
+                          style: TextStyle(
+                            fontSize: 15.0,
+                          ),
+                        ),
+                        actions: [
+                          Container(
+                            child: TextFormField(
+                              decoration: InputDecoration(
+                                border: OutlineInputBorder(),
+                              ),
+                              cursorColor: Colors.black,
+                              onFieldSubmitted: (value) {
+                                setState(() {
+                                  anomalieType = value;
+                                });
+                                Navigator.of(context).pop();
+                              },
+                            ),
+                            height: 30.0,
+                          ),
+                        ],
+                      );
+                    },
+                  );
                   setState(() {
                     currentState = 3;
-                    currentColor = Colors.orangeAccent;
+                    currentColor = Colors.redAccent;
                   });
                 },
                 child: Container(
@@ -802,7 +832,7 @@ class _InColisScreenState extends State<InColisScreen> {
                       horizontal: 20.0,
                     ),
                     child: Text(
-                      'A vérifier',
+                      'Anomalie',
                       style: TextStyle(
                         color: Colors.white,
                       ),
@@ -811,211 +841,6 @@ class _InColisScreenState extends State<InColisScreen> {
                 ),
               ),
             ],
-          ),
-          SizedBox(
-            height: 10.0,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              GestureDetector(
-                onTap: () {
-                  setState(() {
-                    currentState = 4;
-                    currentColor = Colors.red;
-                  });
-                },
-                child: Container(
-                  decoration: BoxDecoration(
-                    border: Border.all(
-                      color: Colors.white38,
-                      width: 1,
-                    ),
-                    borderRadius: BorderRadius.circular(5.0),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                      vertical: 8.0,
-                      horizontal: 20.0,
-                    ),
-                    child: Text(
-                      'Retour',
-                      style: TextStyle(
-                        color: Colors.white,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ],
-      );
-      print(w);
-    } else if (w > 550) {
-      current = Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          GestureDetector(
-            onTap: () {
-              setState(() {
-                currentState = 0;
-                currentColor = Colors.white;
-              });
-            },
-            child: Container(
-              decoration: BoxDecoration(
-                border: Border.all(
-                  color: Colors.white38,
-                  width: 1,
-                ),
-                borderRadius: BorderRadius.circular(5.0),
-              ),
-              child: Padding(
-                padding: const EdgeInsets.symmetric(
-                  vertical: 8.0,
-                  horizontal: 20.0,
-                ),
-                child: Text(
-                  'Au depot',
-                  style: TextStyle(
-                    color: Colors.white,
-                  ),
-                ),
-              ),
-            ),
-          ),
-          SizedBox(
-            width: 10.0,
-            height: 10.0,
-          ),
-          GestureDetector(
-            onTap: () {
-              setState(() {
-                currentState = 1;
-                currentColor = Colors.greenAccent;
-              });
-            },
-            child: Container(
-              decoration: BoxDecoration(
-                border: Border.all(
-                  color: Colors.white38,
-                  width: 1,
-                ),
-                borderRadius: BorderRadius.circular(5.0),
-              ),
-              child: Padding(
-                padding: const EdgeInsets.symmetric(
-                  vertical: 8.0,
-                  horizontal: 20.0,
-                ),
-                child: Text(
-                  'En cours',
-                  style: TextStyle(
-                    color: Colors.white,
-                  ),
-                ),
-              ),
-            ),
-          ),
-          SizedBox(
-            width: 10.0,
-            height: 10.0,
-          ),
-          GestureDetector(
-            onTap: () {
-              setState(() {
-                currentState = 2;
-                currentColor = Colors.green;
-              });
-            },
-            child: Container(
-              decoration: BoxDecoration(
-                border: Border.all(
-                  color: Colors.white38,
-                  width: 1,
-                ),
-                borderRadius: BorderRadius.circular(5.0),
-              ),
-              child: Padding(
-                padding: const EdgeInsets.symmetric(
-                  vertical: 8.0,
-                  horizontal: 20.0,
-                ),
-                child: Text(
-                  'Livré',
-                  style: TextStyle(
-                    color: Colors.white,
-                  ),
-                ),
-              ),
-            ),
-          ),
-          SizedBox(
-            width: 10.0,
-            height: 10.0,
-          ),
-          GestureDetector(
-            onTap: () {
-              setState(() {
-                currentState = 3;
-                currentColor = Colors.orangeAccent;
-              });
-            },
-            child: Container(
-              decoration: BoxDecoration(
-                border: Border.all(
-                  color: Colors.white38,
-                  width: 1,
-                ),
-                borderRadius: BorderRadius.circular(5.0),
-              ),
-              child: Padding(
-                padding: const EdgeInsets.symmetric(
-                  vertical: 8.0,
-                  horizontal: 20.0,
-                ),
-                child: Text(
-                  'A vérifier',
-                  style: TextStyle(
-                    color: Colors.white,
-                  ),
-                ),
-              ),
-            ),
-          ),
-          SizedBox(
-            width: 10.0,
-            height: 10.0,
-          ),
-          GestureDetector(
-            onTap: () {
-              setState(() {
-                currentState = 4;
-                currentColor = Colors.red;
-              });
-            },
-            child: Container(
-              decoration: BoxDecoration(
-                border: Border.all(
-                  color: Colors.white38,
-                  width: 1,
-                ),
-                borderRadius: BorderRadius.circular(5.0),
-              ),
-              child: Padding(
-                padding: const EdgeInsets.symmetric(
-                  vertical: 8.0,
-                  horizontal: 20.0,
-                ),
-                child: Text(
-                  'Retour',
-                  style: TextStyle(
-                    color: Colors.white,
-                  ),
-                ),
-              ),
-            ),
           ),
         ],
       );

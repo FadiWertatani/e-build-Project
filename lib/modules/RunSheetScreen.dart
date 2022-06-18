@@ -127,7 +127,7 @@ class _RunSheetScreenState extends State<RunSheetScreen> {
                         radius: 50,
                         lineWidth: 7.0,
                         percent: runSheetCompleted,
-                        progressColor: Colors.greenAccent,
+                        progressColor: Color(0xff2a756e),
                         backgroundColor: Color(0xFF767D80),
                         circularStrokeCap: CircularStrokeCap.round,
                         center: Text(
